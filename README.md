@@ -10,7 +10,7 @@
    ```sh
    git clone https://github.com/SosnaPL/mymusicform.git
    ```
-3. Zainstaluj pakiety
+3. Zainstaluj moduły
    ```sh
    npm install
    ```
