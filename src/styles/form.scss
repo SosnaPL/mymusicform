@@ -97,9 +97,9 @@ h1 {
   display: flex;
   align-items: center !important;
   justify-content: center !important;
-  height: 80px !important;
+  min-height: 80px !important;
   width: 150px;
-  padding: 0 !important;
+  padding: 5px !important;
   margin: 15px;
   flex-wrap: wrap;
   text-align: center !important;

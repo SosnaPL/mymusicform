@@ -15,6 +15,7 @@ export const Main = () => {
   const [type, setType] = useState('person')
   const [id, setId] = useState(null)
   const [submitDisabled, setSubmitDisabled] = useState(true)
+  const [uploadMessage, setUploadMessage] = useState('Wybierz zdjęcie!')
 
   const type_options = [
     {
@@ -110,6 +111,7 @@ export const Main = () => {
   }
 
   const handleUpload = (file) => {
+    setUploadMessage('Plik został wysłany!')
     setImage(URL.createObjectURL(file))
     setFile(file)
   }
@@ -191,10 +193,11 @@ export const Main = () => {
         name="file"
         classes="upload"
         types={["JPG", "JPEG"]}
+        onTypeError={() => setUploadMessage('Zły typ pliku! Obsługiwane typy: JPG,JPEG')}
         children={
           (
             <div className="upload_content">
-              Wybierz zdjęcie!
+              {uploadMessage}
             </div>
           )
         }
