@@ -3,7 +3,6 @@ import '../styles/form.scss';
 import { select_style } from '../components/select_styles';
 import Select from 'react-select';
 import { FileUploader } from "react-drag-drop-files";
-const queryString = require('query-string');
 import User from '../public/user.png';
 import Company from '../public/company.png';
 
@@ -12,7 +11,8 @@ export const Main = () => {
   const [name, setName] = useState(null)
   const [surname, setSurname] = useState(null)
   const [image, setImage] = useState(User)
-  const [type, setType] = useState(null)
+  const [file, setFile] = useState(null)
+  const [type, setType] = useState('person')
   const [id, setId] = useState(null)
   const [submitDisabled, setSubmitDisabled] = useState(true)
 
@@ -111,6 +111,7 @@ export const Main = () => {
 
   const handleUpload = (file) => {
     setImage(URL.createObjectURL(file))
+    setFile(file)
   }
 
   const idType = () => {
@@ -137,17 +138,16 @@ export const Main = () => {
 
   const handleSubmit = () => {
 
-    let data = queryString.stringify({
-      name: name,
-      surname: surname,
-      type: type,
-      id: id,
-      image: image
-    })
+    const formData = new FormData();
+    formData.append('name', name)
+    formData.append('surname', surname)
+    formData.append('type', type)
+    formData.append('id', id)
+    formData.append('file', file)
 
     fetch("https://localhost:60001/Contractor/Save", {
       method: "POST",
-      body: data
+      body: formData
     })
   }
 
@@ -167,8 +167,8 @@ export const Main = () => {
       <Select
         options={type_options}
         styles={select_style}
+        defaultValue={{ label: 'Osoba', value: 'person' }}
         onChange={(e) => changeType(e)}
-        placeholder={'Wybierz typ...'}
       />
       <div className="form__group field">
         <input type="input" className="form__field" placeholder="Imię" name="name" id='name' onChange={(e) => {
