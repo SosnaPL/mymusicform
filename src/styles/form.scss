@@ -1,0 +1,142 @@
+$primary: #3a7470;
+$secondary: #213b61;
+$white: #fff;
+$gray: #9b9b9b;
+
+:root {
+  --validation: 2px solid #9b9b9b;
+  --validationfocus:#3a7470;
+}
+
+.form_container {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  width: 100%;
+  min-height: 500px;
+  height: 100%;
+  padding: 20px 10px;
+  margin: 0;
+  flex-wrap: wrap;
+}
+
+h1 {
+  text-align: center;
+}
+
+.image {
+  margin-bottom: 10px;
+}
+
+.image > img {
+  width: 100px;
+  height: 100px;
+  padding: 10px;
+}
+
+.form__group {
+  position: relative;
+  padding: 15px 0 0;
+  margin-top: 10px;
+  width: 200px;
+}
+
+.form__field {
+  font-family: inherit;
+  width: 100%;
+  border: 0;
+  border-bottom: 2px solid $gray;
+  outline: 0;
+  font-size: 1.3rem;
+  color: $white;
+  padding: 7px 0;
+  background: transparent;
+  transition: border-color 0.3s;
+
+  &::placeholder {
+    color: transparent;
+  }
+
+  &:placeholder-shown ~ .form__label {
+    font-size: 1.3rem;
+    cursor: text;
+    top: 20px;
+  }
+}
+
+.form__label {
+  position: absolute;
+  top: 0;
+  display: block;
+  transition: 0.2s;
+  font-size: 1rem;
+  color: $gray;
+}
+
+.form__field:focus {
+  ~ .form__label {
+    position: absolute;
+    top: 0;
+    display: block;
+    transition: 0.2s;
+    font-size: 1rem;
+    color: $primary;
+    font-weight:700;    
+  }
+  padding-bottom: 6px;  
+  font-weight: 700;
+  border-width: 3px;
+  border-color: $primary;
+  border-image-slice: 1;
+}
+
+.upload {
+  position: relative;
+  display: flex;
+  align-items: center !important;
+  justify-content: center !important;
+  height: 80px !important;
+  width: 150px;
+  padding: 0 !important;
+  margin: 15px;
+  flex-wrap: wrap;
+  text-align: center !important;
+  border-color: #9b9b9b !important;
+  border-style: solid !important;
+  border-radius: 8px;
+  transition: all 0.5s ease-in-out !important;
+}
+
+.upload:hover {
+  background-color: #252323;
+}
+
+.nip, .pesel {
+  border-bottom: var(--validation);
+}
+
+.nip:focus {
+  border-color: var(--validationfocus);
+}
+
+.pesel:focus {
+  border-color: var(--validationfocus);
+}
+
+.form__field{
+  &:required,&:invalid { box-shadow:none; }
+}
+
+/* Chrome, Safari, Edge, Opera */
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+/* Firefox */
+input[type=number] {
+  -moz-appearance: textfield;
+}
