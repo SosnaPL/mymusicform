@@ -151,6 +151,10 @@ export const Main = () => {
       f.value = ''
     })
 
+    let r = document.querySelector(':root') as HTMLElement
+    r.style.setProperty('--validation', '2px solid #9b9b9b')
+    r.style.setProperty('--validationfocus', '#3a7470')
+
     const formData = new FormData();
     formData.append('name', name)
     formData.append('surname', surname)
