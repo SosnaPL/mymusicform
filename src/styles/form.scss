@@ -125,6 +125,13 @@ h1 {
   border-color: var(--validationfocus);
 }
 
+.confirmation {
+  opacity: 0;
+  color: #3c863c;
+  margin-top: 5px;
+  transition: ease-in-out 1s;
+}
+
 .form__field{
   &:required,&:invalid { box-shadow:none; }
 }

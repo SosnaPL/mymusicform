@@ -139,6 +139,17 @@ export const Main = () => {
   }
 
   const handleSubmit = () => {
+    const confirmation = document.querySelector('.confirmation') as HTMLInputElement
+    confirmation.style.opacity = '1'
+    setTimeout(() => {
+      confirmation.style.opacity = '0'
+    }, 1000)
+
+    const input_fields = document.querySelectorAll('.form__field')
+    input_fields.forEach(field => {
+      let f = field as HTMLInputElement
+      f.value = ''
+    })
 
     const formData = new FormData();
     formData.append('name', name)
@@ -146,6 +157,19 @@ export const Main = () => {
     formData.append('type', type)
     formData.append('id', id)
     formData.append('file', file)
+
+    if (type == 'person') {
+      setImage(User)
+    }
+
+    else if (type == 'company') {
+      setImage(Company)
+    }
+
+    setName(null)
+    setSurname(null)
+    setId(null)
+    setFile(null)
 
     fetch("https://localhost:60001/Contractor/Save", {
       method: "POST",
@@ -203,6 +227,7 @@ export const Main = () => {
         }
       />
       <button type="button" disabled={submitDisabled} className="btn btn-dark" onClick={() => handleSubmit()}>Wyślij</button>
+      <p className="confirmation">Wysłano formularz!</p>
     </div>
   );
 };
