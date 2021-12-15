@@ -153,11 +153,6 @@ export const Main = () => {
   }
 
   const handleSubmit = () => {
-
-    let r = document.querySelector(':root') as HTMLElement
-    r.style.setProperty('--validation', '2px solid #9b9b9b')
-    r.style.setProperty('--validationfocus', '#3a7470')
-
     const formData = new FormData();
     formData.append('name', name)
     formData.append('surname', surname)
@@ -171,6 +166,10 @@ export const Main = () => {
     })
       .then(response => response.json())
       .then(() => {
+        let r = document.querySelector(':root') as HTMLElement
+        r.style.setProperty('--validation', '2px solid #9b9b9b')
+        r.style.setProperty('--validationfocus', '#3a7470')
+
         setFormResponse('confirmation')
         const confirmation = document.querySelector('.confirmation') as HTMLElement
         confirmation.style.opacity = '1'
