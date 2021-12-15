@@ -16,6 +16,7 @@ export const Main = () => {
   const [id, setId] = useState(null)
   const [submitDisabled, setSubmitDisabled] = useState(true)
   const [uploadMessage, setUploadMessage] = useState('Wybierz zdjęcie!')
+  const [formResponse, setFormResponse] = useState(null)
 
   const type_options = [
     {
@@ -138,18 +139,20 @@ export const Main = () => {
     }
   }
 
-  const handleSubmit = () => {
-    const confirmation = document.querySelector('.confirmation') as HTMLInputElement
-    confirmation.style.opacity = '1'
-    setTimeout(() => {
-      confirmation.style.opacity = '0'
-    }, 1000)
+  const handleConfirmation = () => {
+    if (formResponse == 'error') {
+      return (
+        <p className="error">Nie znaleziono metody zapisu!</p>
+      )
+    }
+    else if (formResponse == 'confirmation') {
+      return (
+        <p className="confirmation">Wysłano formularz!</p>
+      )
+    }
+  }
 
-    const input_fields = document.querySelectorAll('.form__field')
-    input_fields.forEach(field => {
-      let f = field as HTMLInputElement
-      f.value = ''
-    })
+  const handleSubmit = () => {
 
     let r = document.querySelector(':root') as HTMLElement
     r.style.setProperty('--validation', '2px solid #9b9b9b')
@@ -162,23 +165,47 @@ export const Main = () => {
     formData.append('id', id)
     formData.append('file', file)
 
-    if (type == 'person') {
-      setImage(User)
-    }
-
-    else if (type == 'company') {
-      setImage(Company)
-    }
-
-    setName(null)
-    setSurname(null)
-    setId(null)
-    setFile(null)
-
     fetch("https://localhost:60001/Contractor/Save", {
       method: "POST",
       body: formData
     })
+      .then(response => response.json())
+      .then(() => {
+        setFormResponse('confirmation')
+        const confirmation = document.querySelector('.confirmation') as HTMLElement
+        confirmation.style.opacity = '1'
+        setTimeout(() => {
+          confirmation.style.opacity = '0'
+        }, 1000)
+
+        const input_fields = document.querySelectorAll('.form__field')
+        input_fields.forEach(field => {
+          let f = field as HTMLInputElement
+          f.value = ''
+        })
+
+        if (type == 'person') {
+          setImage(User)
+        }
+
+        else if (type == 'company') {
+          setImage(Company)
+        }
+
+        setName(null)
+        setSurname(null)
+        setId(null)
+        setFile(null)
+
+      })
+      .catch(() => {
+        setFormResponse('error')
+        const error = document.querySelector('.error') as HTMLElement
+        error.style.opacity = '1'
+        setTimeout(() => {
+          error.style.opacity = '0'
+        }, 1000)
+      });
   }
 
   useEffect(() => {
@@ -231,7 +258,7 @@ export const Main = () => {
         }
       />
       <button type="button" disabled={submitDisabled} className="btn btn-dark" onClick={() => handleSubmit()}>Wyślij</button>
-      <p className="confirmation">Wysłano formularz!</p>
+      {handleConfirmation()}
     </div>
   );
 };

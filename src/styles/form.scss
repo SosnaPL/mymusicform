@@ -132,6 +132,13 @@ h1 {
   transition: ease-in-out 1s;
 }
 
+.error {
+  opacity: 0;
+  color: #e76262;
+  margin-top: 5px;
+  transition: ease-in-out 1s;
+}
+
 .form__field{
   &:required,&:invalid { box-shadow:none; }
 }
